@@ -1,5 +1,6 @@
 import * as assert from 'assert'
 import * as R from 'ramda'
+import { listenerCount } from 'cluster'
 
 /**
  * @kata
@@ -12,7 +13,7 @@ export interface Friend {
   age: number
 }
 
-const getAverageAge: (list: Friend[]) => number = (list) => 1
+const getAverageAge: (list: Friend[]) => number = (list) => list.reduce((acc, val) => acc + val.age, 0) / list.length
 
 /**
  * Do not change below this line

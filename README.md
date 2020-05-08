@@ -112,13 +112,24 @@ const addUser = {
 ```
 
 A `reducer` is a function of `(State, Action) -> State`. Our goal with this Kata is to
-take the action `addUser` and produce a new state with that user added
+take the actions and produce a new state that does what the action desires. As an example:
 
 ```ts
+// Create the next state
+const nextState = reducer(emptyState, addUser)
+
+// Assert its shape
 assert.deepEqual(
-  reducer(emptyState, addUser),
+  nextState,
   withoutPhilusAsFriend,
   'Adding a friend to an empty state adds them to the IDs of User Domain'
+)
+
+// Assert that we created something
+// new instead of mutating the passed
+// in values
+assert.false(
+  nextState === emptyState
 )
 ```
 

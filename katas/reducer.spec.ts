@@ -84,15 +84,25 @@ const withoutPhilusAsFriend = {
 }
 
 test('Add User', (assert) => {
+  const nextState = reducer(emptyState, addUser)
+
   assert.deepEqual(
-    reducer(emptyState, addUser),
+    nextState,
     withoutPhilusAsFriend,
     'Adding a friend to an empty state adds them to the IDs of User Domain'
+  )
+
+  // We cannot _mutate_ the state given
+  // but instead only create a new one
+  assert.false(
+    nextState === emptyState
   )
 })
 
 test('Update User', (assert) => {
-  assert.deepEqual(reducer(withPhilusAsFriend, updateUser), {
+  const nextState = reducer(withPhilusAsFriend, updateUser) 
+
+  assert.deepEqual(nextState, {
     users: {
       ids: {
         [dummyUserID]: {
@@ -104,28 +114,50 @@ test('Update User', (assert) => {
       friends: [dummyUserID],
     },
   })
+
+  assert.false(
+    nextState === withPhilusAsFriend
+  )
 })
 
 test('Remove User', (assert) => {
+  const nextState = reducer(withPhilusAsFriend, removeUser)
+
   assert.deepEqual(
-    reducer(withPhilusAsFriend, removeUser),
+    nextState,
     emptyState,
     'Removing a friend from both the IDS and Friends list'
+  )
+
+  assert.false(
+    nextState === withPhilusAsFriend
   )
 })
 
 test('Add User To Friends', (assert) => {
+  const nextState = reducer(withoutPhilusAsFriend, addUserToFriends)
+
   assert.deepEqual(
-    reducer(withoutPhilusAsFriend, addUserToFriends),
+    nextState,
     withPhilusAsFriend,
     'Adds the friends ID to the Friends list'
+  )
+
+  assert.false(
+    nextState === withoutPhilusAsFriend
   )
 })
 
 test('Remove User From Friends', (assert) => {
+  const nextState = reducer(withPhilusAsFriend, removeUserFromFriends)
+
   assert.deepEqual(
-    reducer(withPhilusAsFriend, removeUserFromFriends),
+    nextState,
     withoutPhilusAsFriend,
     'Removes the ID from the Friends list without touching it in the IDs'
+  )
+
+  assert.false(
+    nextState === withPhilusAsFriend
   )
 })

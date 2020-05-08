@@ -12,7 +12,8 @@ export interface Friend {
   age: number
 }
 
-const dropFlipAndReverseIt: (list: Friend[]) => Friend[] = (list) => list
+const dropFlipAndReverseIt: (list: Friend[]) => Friend[] = (list) => list.map((val) => 
+  ({ ...val, name: val.name.toLowerCase().split('').reverse().join('') }))
 
 /**
  * Do not change below this line

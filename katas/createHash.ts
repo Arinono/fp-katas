@@ -13,9 +13,15 @@ export interface Friend {
   age: number
 }
 
-const createFriendHash: (list: Friend[]) => { [x: string]: Friend } = (
-  list
-) => ({ '1': { id: '1', name: 'foo', age: 100 } })
+const createFriendHash: (list: Friend[]) => { [x: string]: Friend } = (list) => {
+  const obj = {}
+  list.forEach(val => {
+    obj[val.id] = val
+  })
+  return obj
+}
+
+// ({ '1': { id: '1', name: 'foo', age: 100 } })
 
 /**
  * Do not change below this line
